@@ -4,7 +4,6 @@ vue训练营面试第二题：Vue组件data选项为什么必须是个函数而V
 组件（Component）定义方式
 组件在定义的时候，可以全局（Vue.component()）或者局部注册
 new Vue({
-  // ...
   components: {
     // <my-component> 将只在父模板可用
     'my-component': Child
@@ -14,7 +13,6 @@ new Vue({
 下面以全局注册为例过一遍Vue源码。
 前面说的报错位置在这里
 strats.data // vue-template-compiler/build.js
-...
 if (typeof childVal !== 'function') {
     "development" !== 'production' && warn(
       'The "data" option should be a function ' +
@@ -24,14 +22,10 @@ if (typeof childVal !== 'function') {
     )
     return parentVal
 }
-...
 这个函数简单来说，是负责data字段内容处理的，不管是new Vue的参数里data还是组件初始化的data，都要经过这里。
-
-简单起见，从这个位置往上倒（二声）到开头：
 
 initGlobalAPI (Vue)
 -function initAssetRegisters (Vue)
-...
 到这一步结束，按照_assetTypes（包括'component','directive','filter'）挂载方法。这里挂载了Vue.component的初始化方法，但还没调用。
 
 经过一众其他内部操作。直到执行我们的代码（组件是从官方文档抄过来的）
@@ -76,9 +70,7 @@ function VueComponent (options) {
 new Vue的时候，也会调用mergeOptions，不同的是这时候传入了vm实例。这时在mergeField('data')里走了另外一条路线：
 
 return function mergedInstanceDataFn () {
-// ...
     var instanceData = typeof childVal === 'function'
         ? childVal.call(vm)
         : childVal
-// ...
 }
