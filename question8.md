@@ -1,0 +1,14 @@
+vue面试第八题：谈谈你对MVC、MVP和MVVM的理解？
+MVC：Model-View-Controller
+MVP：Model-View-Presenter
+MVVM：Model-View-ViewModel
+三个都有Model和View
+Model就是领域模型，数据对象，同时，提供外部对应用程序数据的操作的接口，也可能在数据变化时发出变更通知。Model不依赖于View的实现，
+只要外部程序调用Model的接口就能够实现对数据的增删改查。
+View就是UI层，提供对最终用户的交互操作功能，包括UI展现代码及一些相关的界面逻辑代码。
+三者的差异在于如何粘合View和Model，实现用户的交互操作以及变更通知
+MVP和MVVM完全隔离了Model和View，但是在有些情况下，数据从Model到ViewModel或者Presenter的拷贝开销很大，
+可能也会结合MVC的方式，Model直接通知View进行变更。在实际的应用中很有可能你已经在不知不觉中将几种模式融合在一起，
+但是为了代码的可扩展、可测试性，必须做到模块的解耦，不相关的代码不要放在一起。
+个人理解，在广义地谈论MVC架构时，并非指本文中严格定义的MVC，而是指的MV*，也就是视图和模型的分离，
+只要一个框架提供了视图和模型分离的功能，我们就可以认为它是一个MVC框架。
